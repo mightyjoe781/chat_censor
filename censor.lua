@@ -6,8 +6,8 @@ fun_mode = 1
 fun_list = {"kitten","cat","dog","ara-ara"}
 violations = {}
 -- cost type limit
-violation_limit = 10
-caps_limit = 70
+violation_limit = 12
+caps_limit = 50
 
 local f = MP.."/wordlist/fun"
 if file_exists(f) then

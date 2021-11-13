@@ -129,8 +129,9 @@ minetest.register_on_chat_message(function(name,message)
 
     if violations[name] >= violation_limit then
         minetest.kick_player(name, "Violations Limits Excedded")
+        minetest.chat_send_all(minetest.colorize("#00ff00","<prismo> "..name.." has been kicked due to violations limits."))
         print("[Censor]: " .. name .. " was kicked due to violations limits.")
-        return
+        return true
     end
 
     -- broadcast the message to everyone

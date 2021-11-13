@@ -30,13 +30,13 @@ end
 -- Stop BAD names from joining
 dofile(MP.."/name_censor.lua")
 
--- CAPS Alert
--- Censor bad words in chat
-dofile(MP.."/censor.lua")
-
--- VPN Blocker (ghoti)
+-- VPN Blocker (ghoti/Paul)
 -- Basically create a IP Rating System
-dofile(MP.."/vpn_blocker.lua")
+-- dofile(MP.."/vpn_blocker.lua")
 
 -- AntiSpam
 dofile(MP.."/antispam.lua")
+
+-- CAPS Alert
+-- Censor bad words in chat
+dofile(MP.."/censor.lua")

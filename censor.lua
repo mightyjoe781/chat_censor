@@ -89,23 +89,26 @@ minetest.register_on_chat_message(function(name,message)
 
     -- Censor Code
     -- "Lua is sexy" -> "Lua is ****"
-    --[[
     local mes = ""
     for w in message:gmatch("%S+") do
         for k,v in pairs(bad_words) do
             if string.find(string.lower(w), string.lower(v)) then
-                w = w:gsub(".","*")
+                local pat = string.rep("*",v:len())
+                if fun_mode == 1 then
+                    pat = fun_list[math.random(1,#fun_list)] .. " "
+                end
+                w = pat
             end
         end
         mes = mes .. w .. " "
     end
     -- remove last " "
     mes = mes:sub(1,-2)
-    --]]
 
     --Censor Code v2
     -- "Lua is sexy" -> "Lua is ***y"
-    local mes = message
+    --[[
+    local mes = string.lower(message)
     for k,v in pairs(bad_words) do
         -- Apply fun word substitution
         local pat = string.rep("*",v:len())
@@ -114,21 +117,21 @@ minetest.register_on_chat_message(function(name,message)
         end
         mes = mes:gsub(v,pat)
     end
+    --]]
 
     -- warn the offender
-    if mes ~= message then
+    if string.lower(mes) ~= string.lower(message) then
         print("[Censor]: ".. name .. " sent censored message :"..message)
         violations[name] = (violations[name] or 0) + 3
         censor.warn(name)
     end
+    message = mes
 
     if violations[name] >= violation_limit then
         minetest.kick_player(name, "Violations Limits Excedded")
         print("[Censor]: " .. name .. " was kicked due to violations limits.")
         return
     end
-
-    message = mes
 
     -- broadcast the message to everyone
     for _,player in pairs(minetest.get_connected_players()) do

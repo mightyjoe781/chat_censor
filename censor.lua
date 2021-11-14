@@ -92,12 +92,24 @@ minetest.register_on_chat_message(function(name,message)
     local mes = ""
     for w in message:gmatch("%S+") do
         for k,v in pairs(bad_words) do
+            if v:len() >= 4 then
+                -- do contains operation
             if string.find(string.lower(w), string.lower(v)) then
                 local pat = string.rep("*",v:len())
                 if fun_mode == 1 then
-                    pat = fun_list[math.random(1,#fun_list)] .. " "
+                    pat = fun_list[math.random(1,#fun_list)]
                 end
                 w = pat
+            end
+            else
+                -- do match operation
+            if w == v then
+                local pat = string.rep("*",v:len())
+                if fun_mode == 1 then
+                    pat = fun_list[math.random(1,#fun_list)]
+                end
+                w = pat
+            end
             end
         end
         mes = mes .. w .. " "
